@@ -5,6 +5,8 @@ import java.sql.DriverManager;
 import java.sql.Statement;
 import java.util.Scanner;
 
+import comm.DbConn;
+
 public class DeptModify {
 
 	public static void main(String[] args)throws Exception{

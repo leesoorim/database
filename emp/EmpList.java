@@ -5,22 +5,26 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
+import comm.DbConn;
+
 public class EmpList {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception{
 
-		String url = "jdbc:oracle:thin:@//localhost:1522/orcl7";
-		String username = "c##java";
-		String userpass = "1234";
 		
-		try {
-			Class.forName("oracle.jdbc.OracleDriver");
+	
 			
-			Connection con = DriverManager.getConnection(url,username,userpass);
+			Statement stmt = DbConn.OracleConn(); 
 			
-			Statement stmt = con.createStatement(); 
+			String sql1 = "select count(*)total from emp";
+			ResultSet rs1 = stmt.executeQuery(sql1);
+			rs1.next();
 			
-			String sql = "select empno,ename,job,sal,deptno from emp";
+			int total = rs1.getInt("total");
+			System.out.println("총 사원수 : "+ total);
+			System.out.println("------------------------------");
+			
+			String sql = "select empno,ename,job,hiredate,deptno from emp order by hiredate desc";
 			ResultSet rs = stmt.executeQuery(sql);
 			
 			while(rs.next()) { 
@@ -28,14 +32,11 @@ public class EmpList {
 				String eno = rs.getString("empno");
 				String enm = rs.getString("ename");
 				String job = rs.getString("job");
+				String hdt = rs.getString("hiredate").substring(0,10);
 				String dno = rs.getString("deptno");
-				String sal = rs.getString("sal");
 				
-				System.out.println(eno+" "+enm+" "+job+" "+sal+" "+dno);
+				System.out.println(eno+" "+enm+" "+job+" "+dno+" "+hdt);
 			}
-					
-			
-		} catch (Exception e) {} 
 		
 	}
 

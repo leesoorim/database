@@ -3,6 +3,8 @@ package dept2;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
+import comm.DbConn;
+
 public class DeptList {
 
 	public static void main(String[] args) throws Exception {
