@@ -5,18 +5,40 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
  
+<%@ include file = "/include/dbcon.jsp"%> 
+ 
 <%
-String url = "jdbc:oracle:thin:@//127.0.0.1:1522/orcl7";
-String username = "c##java";
-String userpass = "1234";
-
-Class.forName("oracle.jdbc.OracleDriver");
-Connection con = DriverManager.getConnection(url,username,userpass);
-Statement stmt = con.createStatement();
-
-
 String deptno = request.getParameter("deptno");
 
+// null : 부서번호 설정이 안됨;
+// 공백 : 부서번호가 비어있는 경우;
+if(deptno==null || deptno.equals("")){
+//if( deptno.equals("")|| deptno==null ){
+%>	
+	<script>
+	location="deptList.jsp";
+	</script>
+<%	
+	return;
+}
+
+String sqlCnt = "select count(*) from dept2 where deptno='"+deptno+"'";
+// 1, 0
+ResultSet rsCnt = stmt.executeQuery(sqlCnt);
+rsCnt.next();
+int cnt = rsCnt.getInt(1);
+
+if(cnt==0){
+%>
+	<script>
+	alert("없는 부서번호입니다.");
+	location="deptList.jsp";
+	</script>
+<% 	
+	return;
+}
+%>
+<%
 String sql = "select deptno,dname,loc from dept2 where deptno='"+deptno+"'";
 ResultSet rs = stmt.executeQuery(sql);
 rs.next();
@@ -31,6 +53,16 @@ String loc = rs.getString("loc");
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
+
+<script>
+function fn_delete() {
+	if(confirm("정말삭제??")){
+		location="deptDelete.jsp?deptno=<%=deptno%>";
+	}
+}
+</script>
+
+
 <body>
 
 <form name="frm" method="post" action="deptModifySave.jsp">
@@ -60,7 +92,7 @@ String loc = rs.getString("loc");
 		<th colspan="2" >
 			<button type="submit">수정</button>
 			<button type="reset">취소</button>
-			<button type="button" onClick="location='deptDelete.jsp?deptno=<%=deptno %>'">삭제</button>
+			<button type="button" onClick="fn_delete()">삭제</button>
 		</th>
 	</tr>
 </table>

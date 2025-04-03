@@ -6,16 +6,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     
+    <!-- include : 특정 파일 내용을 가져와서 실행하는 설정 -->
+    <%@ include file = "/include/dbcon.jsp" %>
+    
 <%
-String url = "jdbc:oracle:thin:@//127.0.0.1:1522/orcl7";
-String username = "c##java";
-String userpass = "1234";
 
-Class.forName("oracle.jdbc.OracleDriver");
-Connection con = DriverManager.getConnection(url,username,userpass);
-Statement stmt = con.createStatement();
-
-String sql = "select deptno,dname,loc from dept2";
+String sql = "select deptno,dname,loc from dept2 order by upper(dname)";
 ResultSet rs = stmt.executeQuery(sql);
 %>
 

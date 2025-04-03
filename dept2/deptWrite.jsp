@@ -1,5 +1,15 @@
+<%@page import="java.sql.ResultSet"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    
+ <%@ include file="/include/dbcon.jsp"%>
+    
+<%
+String sql = "select nvl(max(deptno),0)+10 from dept2";
+ResultSet rs = stmt.executeQuery(sql);
+rs.next();
+int dno = rs.getInt(1);
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -15,15 +25,15 @@
 <table border="1" width="500">
 	<tr>
 		<th>부서번호</th>
-		<td><input type="text" name="deptno"></td>
+		<td><input type="text" name="deptno" value="<%=dno %>" readonly></td>
 	</tr>
 	<tr>
-		<th>부서이름</th>
-		<td><input type="text" name="dname"></td>
+		<th><label for="dname">부서이름</label></th>
+		<td><input type="text" id="dname" name="dname" placeholder="부서이름입력" autofocus></td>
 	</tr>
 	<tr>
-		<th>부서위치</th>
-		<td><input type="text" name="loc"></td>
+		<th><label for="loc">부서위치</label></th>
+		<td><input type="text" id="loc" name="loc" placeholder="부서위치입력"></td>
 	</tr>
 	<tr>
 		<th colspan="2" >

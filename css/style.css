@@ -1,0 +1,33 @@
+@charset "UTF-8";
+
+table{
+	width: 600px;
+	border-collapse:collapse; /* 셀과 셀 사이 여백제거*/
+}
+th, td{
+	border:1px solid #cccccc;
+	padding : 3px;
+	text-align:center;
+	font-size:12px;
+}
+
+.input1{
+	width:98%;
+	font-size:12px;
+	padding:2px;
+}
+
+.div_title{
+	width:600px;
+	text-align:center;
+	font-size:20px;
+	font-weight:bold;
+	margin-bottom:5px;
+}
+
+.div_top_button{
+	width:600px;
+	text-align:right;
+	margin-bottom:5px;
+}
+
