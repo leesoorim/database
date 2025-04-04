@@ -14,12 +14,27 @@ String hdt = request.getParameter("hiredate");
 String sal = request.getParameter("sal");
 String com = request.getParameter("comm");
 String dno = request.getParameter("deptno");
+
+if(sno == null || 
+   snm == null || 
+   sno.length() != 4 || 
+   snm.equals("")){
+%>
+	<script>
+	alert("올바른 접근이 아닙니다!!");
+	location = "empList.jsp";
+	</script>
+<%	
+	return;	// jsp 종료
+}
 %>
 
 <!-- 입력SQL작성 -->
 <%
+
 String sql="insert into emp values"
 			+"('"+sno+"','"+snm+"','"+job+"','"+mgr+"','"+hdt+"','"+sal+"','"+com+"','"+dno+"')";
+
 
 int result = stmt.executeUpdate(sql);
 

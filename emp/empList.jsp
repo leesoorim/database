@@ -85,6 +85,5 @@ function fn_acrion(){
 
 </table>
 
-<p><button> 등록 </button></p>
 </body>
 </html>
