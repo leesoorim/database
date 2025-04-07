@@ -2,6 +2,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     
+    <!-- 절대경로 -->
 <%@ include file = "/include/dbcon.jsp" %>
 
 <%
@@ -26,7 +27,7 @@ ResultSet rs= stmt.executeQuery(sql);
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link rel="stylesheet" href="../css/style.css"/>
+<link rel="stylesheet" href="/jspProject/css/style.css"/>
 
 </head>
 
@@ -70,8 +71,10 @@ function fn_acrion(){
 	String dno = rs.getString(4);
 	String hdt = rs.getString(5);
 	%>
-	<tr >
+	<tr style="cursor:pointer;" 
+		onClick="location='empDetail.jsp?empno=<%=sno %>'">
 		<td><%=total %></td>
+		<!--<td><a href="empDetail.jsp?empno=<%=sno %>"><%=snm %></a></td>  -->
 		<td><%=snm %></td>
 		<td><%=job %></td>
 		<td><%=dno %></td>

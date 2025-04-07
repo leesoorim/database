@@ -5,13 +5,43 @@
 <%@include file = "/include/dbcon.jsp" %>
 
 <%
-// 새로운 사원번호 가져오기
-// 1001 ~ 9999
-// 만약 첫 데이터 등록시 1001번으로 시작
-String sql = "select nvl(max(empno),1000)+1 from emp";
+// 파라메터 값 설정
+String empno = request.getParameter("empno");
+
+// 사원번호의 null값 공백 체크,사원번호의 존재유무 체크
+if(empno==null || empno.equals("")){
+%>
+	<script>
+	alert("잘못된번호");
+	location="empList.jsp";
+	</script>
+	
+<% 
+	return; // 프로그램중단
+}
+
+String sql = "select EMPNO "
+		   +"		,ENAME "
+		   +"		,JOB   "
+		   +"		,MGR   "
+		   +"		,to_char(HIREDATE,'yyyy-mm-dd') hiredate "
+		   +"		,SAL	"
+		   +"		,COMM	"
+		   +"		,DEPTNO  from emp where empno='"+empno+"'";
+
 ResultSet rs = stmt.executeQuery(sql);
 rs.next();
-int empno=rs.getInt(1);
+
+String ename = rs.getString("ename");
+String job = rs.getString("job");
+String deptno = rs.getString("deptno");
+String mgr = rs.getString("mgr");
+String hiredate = rs.getString("hiredate");
+String sal = rs.getString("sal");
+String comm = rs.getString("comm");
+
+
+
 
 //업무 목록
 String sql3 = "select distinct(job) from emp where job!='PRESIDENT'";
@@ -33,7 +63,7 @@ ResultSet rs4 = stmt4.executeQuery(sql4);
 <html>
 <head>
 <meta charset="UTF-8">
-<title>사원등록화면</title>
+<title>사원수정화면</title>
 <link rel="stylesheet" href="../css/style.css">
 </head>
 
@@ -83,10 +113,10 @@ function fn_submit(){
 <body>
 
 <div class = "div_title">
-	사원등록
+	사원 정보 수정
 </div>
 		<!-- 폼이름 아무거나 설정해도됨 -->
-<form name="frm" method="post" action="empWriteSave.jsp">
+<form name="frm" method="post" action="empModifySave.jsp">
 <div class="div_top_button">
 	<!-- return false : submit()버튼 기능의 전송기능을 없애는 세팅 -->
 	<!-- submit()버튼 :: 전송기능,{enter}버튼의 인식 -->
@@ -106,7 +136,7 @@ function fn_submit(){
 	</tr>
 	<tr>
 		<th><label for="ename">사원이름</label></th>
-		<td><input type="text" id="ename" name="ename" class="input1" placeholder="사원이름" maxlength="30" autofocus></td>
+		<td><input type="text" id="ename" name="ename" class="input1" value="<%=ename %>" placeholder="사원이름" maxlength="30" autofocus></td>
 	</tr>
 	<tr>
 		<th><label for="job">업무</label></th>
@@ -114,9 +144,9 @@ function fn_submit(){
 		<select name="job" id="job" class="select1">
 			<%
 			while(rs3.next()){
-				String job = rs3.getString(1);
+				String job3 = rs3.getString(1);
 			%>
-				<option value="<%=job%>"><%=job %></option>
+				<option value="<%=job3%>"><%=job3 %></option>
 			<% 	
 			}
 			%>
@@ -144,15 +174,15 @@ function fn_submit(){
 	</tr>
 	<tr>
 		<th><label for="hiredate">입사일</label></th>
-		<td><input type="date" id="hiredate" name="hiredate" class="input1"></td>
+		<td><input type="date" id="hiredate" name="hiredate" value="<%=hiredate %>" class="input1"></td>
 	</tr>
 	<tr>
 		<th><label for="sal">기본급여</label></th>
-		<td><input type="number" id="sal" name="sal" class="input1" value="0"></td>
+		<td><input type="number" id="sal" name="sal" class="input1" value="<%=sal %>"></td>
 	</tr>
 	<tr>
 		<th><label for="comm">업무수당</label></th>
-		<td><input type="number" id="comm" name="comm" class="input1" value="0"></td>
+		<td><input type="number" id="comm" name="comm" class="input1" value="<%=comm %>"></td>
 	</tr>
 	
 	<tr>
