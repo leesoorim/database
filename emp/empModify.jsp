@@ -116,7 +116,7 @@ function fn_submit(){
 	사원 정보 수정
 </div>
 		<!-- 폼이름 아무거나 설정해도됨 -->
-<form name="frm" method="post" action="empModifySave.jsp">
+<form name="frm" method="get" action="empModifySave.jsp">
 <div class="div_top_button">
 	<!-- return false : submit()버튼 기능의 전송기능을 없애는 세팅 -->
 	<!-- submit()버튼 :: 전송기능,{enter}버튼의 인식 -->
@@ -146,7 +146,7 @@ function fn_submit(){
 			while(rs3.next()){
 				String job3 = rs3.getString(1);
 			%>
-				<option value="<%=job3%>"><%=job3 %></option>
+				<option value="<%=job3%>"<%if(job3.equals(job)){out.print("selected");} %>><%=job3 %></option>
 			<% 	
 			}
 			%>
@@ -164,7 +164,7 @@ function fn_submit(){
 				String sno = rs4.getString(1);
 				String snm = rs4.getString(2);
 			%>
-				<option value="<%=sno%>"><%=snm %></option>
+				<option value="<%=sno%>" <%if(sno.equals(mgr)){out.print("selected");} %>><%=snm %></option>
 			<% 
 			}
 			%>
@@ -195,7 +195,7 @@ function fn_submit(){
 				String dnm=rs2.getString(2);
 				String loc=rs2.getString(3);
 			%>
-				<option value="<%=dno %>"><%=dnm %> (<%=loc %>)</option>	
+				<option value="<%=dno %>"<%if(dno.equals(deptno)){out.print("selected");} %>><%=dnm %> (<%=loc %>)</option>	
 			<%
 			}
 			%>
