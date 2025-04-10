@@ -10,6 +10,7 @@ String sql2 = "select count(*) from nboard";
 ResultSet rs2 = stmt.executeQuery(sql2);
 rs2.next();
 int total = rs2.getInt(1);
+int pageRownum = total;
 
 String sql = "select seqid"
 			 +"		,title"
@@ -20,6 +21,7 @@ String sql = "select seqid"
 			 +" order by seqid desc";
 
 ResultSet rs= stmt.executeQuery(sql);
+
 %>
 
 <!DOCTYPE html>
@@ -33,7 +35,7 @@ ResultSet rs= stmt.executeQuery(sql);
 
 <script>
 function fn_action(){
-	location="empWrite.jsp";
+	location="boardWrite.jsp";
 }
 
 </script>
@@ -50,11 +52,11 @@ function fn_action(){
 
 	<table border=1 >
 	<colgroup>
+		<col width="10%"/>
+		<col width="*"/>
 		<col width="15%"/>
-		<col width="20%"/>
-		<col width="25%"/>
-		<col width="20%"/>
-		<col width="20%"/>
+		<col width="15%"/>
+		<col width="15%"/>
 	</colgroup>
 	<tr>
 		<th>번호</th>
@@ -72,15 +74,15 @@ function fn_action(){
 	String rdate = rs.getString("rdate");
 	%>
 	<tr >
-		<td><%=seqid %></td>
-		<td><%=title %></td>
+		<td><%=pageRownum %></td>
+		<td style="text-align:left">&nbsp;<a href="boardDetail.jsp?seqid=<%=seqid %>"><%=title %></a></td>
 		<td><%=writer %></td>
 		<td><%=hits %></td>
 		<td><%=rdate %></td>
 	</tr>
 
 <%
-	total--;
+	pageRownum--;
 	}
 %>
 
