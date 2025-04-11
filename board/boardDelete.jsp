@@ -10,7 +10,7 @@ String pass=request.getParameter("pass");
 if(seqid==null || pass==null || seqid.equals("") || pass.equals("")){
 %>	
 	<script>
-	alert("잘못된 경로입니다.");
+	alert("입력 데이터를 다시 확인해주세요.");
 	location="boardList.jsp";
 	</script>
 <% 	
@@ -33,7 +33,10 @@ if(result==1){
 %>
 	<script>
 	alert("삭제 실패!");
-	history.back();
+	//history.back; // 이전 화면으로 이동
+	history.go(-1); // 이전 화면으로 이동
+	//history.go(1); // 다음 화면으로 이동
+	//history.go(-2); // 이전 이전 화면으로 이동
 	</script>
 <% 	
 }
